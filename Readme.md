@@ -3,8 +3,8 @@
 Implement your team solution to the Zombie War. You must use GitHub and pull request. Also, please have other team members review your pull requests.
 
 **Tasks:**
- - [ ] Write the zombie character classes (common infected, tank)
- - [ ] Write the survivor character classes (scientist, civilian, soldier)
+ - [x] Write the zombie character classes (common infected, tank)
+ - [x] Write the survivor character classes (scientist, civilian, soldier)
  - [ ] Write the program as described below
  - [ ] Create several releases (see sample runs and descriptions below)
  
