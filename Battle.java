@@ -12,8 +12,8 @@ public class Battle {
     }
 
     public void simulateBattle() {
-        System.out.println("We have " + survivors.size() + " survivors trying to make it to safety.");
-        System.out.println("But there are " + zombies.size() + " zombies waiting for them.");
+        System.out.println("We have " + survivors.size() + " survivors trying to make it to safety. (" + getSurvivorComposition() + ")");
+        System.out.println("But there are " + zombies.size() + " zombies waiting for them. (" + getZombieComposition() + ")");
 
         // continuing battle if atleast one of survior and a zombie is alive
         while (anyAlive(survivors) && anyAlive(zombies)) {
@@ -25,6 +25,10 @@ public class Battle {
                     Zombie target = getRandomAliveZombie();
                     if (target != null) {
                         target.receiveDamage(survivor.getAttack());
+                        // if selected zombie dies from the attack
+                        if (!target.isAlive()) {
+                            System.out.println(survivor.getClass().getSimpleName() + " killed " + target.getClass().getSimpleName());
+                        }
                     }
                 }
             }
@@ -35,6 +39,9 @@ public class Battle {
                     Survivor target = getRandomAliveSurvivor();
                     if (target != null) {
                         target.receiveDamage(zombie.getAttack());
+                        if (!target.isAlive()) {
+                            System.out.println(zombie.getClass().getSimpleName() + " killed " + target.getClass().getSimpleName());
+                        }
                     }
                 }
             }
@@ -65,6 +72,19 @@ public class Battle {
     private Survivor getRandomAliveSurvivor() {
         List<Survivor> aliveSurvivors = survivors.stream().filter(Character::isAlive).toList();
         return aliveSurvivors.isEmpty() ? null : aliveSurvivors.get(random.nextInt(aliveSurvivors.size()));
+    }
+
+    private String getSurvivorComposition() {
+        long soldiers = survivors.stream().filter(s -> s instanceof Soldier).count();
+        long scientists = survivors.stream().filter(s -> s instanceof Scientist).count();
+        long civilians = survivors.stream().filter(s -> s instanceof Civilian).count();
+        return String.format("%d scientist, %d civilian, %d soldiers", scientists, civilians, soldiers);
+    }
+
+    private String getZombieComposition() {
+        long commonInfected = zombies.stream().filter(z -> z instanceof CommonInfected).count();
+        long tanks = zombies.stream().filter(z -> z instanceof Tank).count();
+        return String.format("%d common infected, %d tanks", commonInfected, tanks);
     }
 
 }
