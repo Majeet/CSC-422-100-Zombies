@@ -26,8 +26,8 @@ public class Battle {
                     if (target != null) {
                         target.receiveDamage(survivor.getAttack());
                         // if selected zombie dies from the attack
-                        if (!target.isAlive()) {
-                            System.out.println(survivor.getClass().getSimpleName() + " killed " + target.getClass().getSimpleName());
+                    if (target != null && survivor.attackZombie(target)) {
+                        System.out.println(survivor.getClass().getSimpleName() + " killed " + target.getClass().getSimpleName() + " with " + survivor.getWeapon().getName());
                         }
                     }
                 }
